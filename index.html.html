@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ASCII to Binary & Hex Representation</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&display=swap');
+
+  :root {
+    --color-bg: #ffffff;
+    --color-text: #374151;
+    --color-gray: #6b7280;
+    --color-card-bg: #f9fafb;
+    --color-shadow: rgba(0, 0, 0, 0.05);
+    --color-accent: #111827;
+    --font-heading: 'Poppins', sans-serif;
+    --font-mono: 'Courier New', monospace, monospace;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 3rem 1rem;
+  }
+
+  .container {
+    max-width: 600px;
+    width: 100%;
+  }
+
+  h1 {
+    font-weight: 800;
+    font-size: 3.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-accent);
+  }
+
+  p.subtitle {
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: var(--color-gray);
+    margin-bottom: 3rem;
+  }
+
+  label {
+    font-weight: 600;
+    font-size: 1.125rem;
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--color-accent);
+  }
+
+  input[type="text"] {
+    width: 3rem;
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.75rem;
+    border: 2px solid var(--color-gray);
+    text-align: center;
+    transition: border-color 0.3s ease;
+  }
+  input[type="text"]:focus {
+    border-color: var(--color-accent);
+    outline: none;
+  }
+
+  .card {
+    background: var(--color-card-bg);
+    box-shadow: 0 8px 16px var(--color-shadow);
+    border-radius: 0.75rem;
+    padding: 2rem;
+    margin-top: 2rem;
+  }
+
+  .output-row {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 1.375rem;
+    color: var(--color-accent);
+    margin-bottom: 1rem;
+  }
+
+  .label-inline {
+    font-weight: 600;
+    color: var(--color-gray);
+    margin-right: 0.5rem;
+  }
+
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 2.5rem;
+    }
+    .container {
+      padding: 0 1rem;
+    }
+  }
+</style>
+</head>
+<body>
+  <main class="container" role="main" aria-labelledby="page-title">
+    <h1 id="page-title">ASCII to Binary &amp; Hex Representation</h1>
+    <p class="subtitle">Enter a single character below to see its binary and hexadecimal code representations.</p>
+    <form id="charForm" onsubmit="return false;" aria-label="Character input form">
+      <label for="charInput">Character:</label>
+      <input type="text" id="charInput" maxlength="1" autocomplete="off" aria-describedby="charHelp" aria-required="true" />
+      <p id="charHelp" class="subtitle" style="font-size:0.875rem; margin-top:0.5rem; color: var(--color-gray);">
+        Only one character allowed.
+      </p>
+    </form>
+    <section class="card" aria-live="polite" aria-atomic="true" aria-relevant="additions removals" aria-label="ASCII code representations">
+      <div class="output-row" id="asciiOutput">
+        <span class="label-inline">ASCII Code (Decimal):</span><span id="asciiCode">-</span>
+      </div>
+      <div class="output-row" id="binaryOutput">
+        <span class="label-inline">Binary (8-bit):</span><span id="binaryCode">-</span>
+      </div>
+      <div class="output-row" id="hexOutput">
+        <span class="label-inline">Hexadecimal:</span><span id="hexCode">-</span>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      const input = document.getElementById('charInput');
+      const asciiCodeSpan = document.getElementById('asciiCode');
+      const binaryCodeSpan = document.getElementById('binaryCode');
+      const hexCodeSpan = document.getElementById('hexCode');
+
+      function toBinaryPad8(num) {
+        return num.toString(2).padStart(8, '0');
+      }
+
+      function toHexPad2(num) {
+        return num.toString(16).toUpperCase().padStart(2, '0');
+      }
+
+      input.addEventListener('input', () => {
+        const val = input.value;
+        if (val.length === 1) {
+          const code = val.charCodeAt(0);
+          asciiCodeSpan.textContent = code;
+          binaryCodeSpan.textContent = toBinaryPad8(code);
+          hexCodeSpan.textContent = toHexPad2(code);
+        } else {
+          asciiCodeSpan.textContent = '-';
+          binaryCodeSpan.textContent = '-';
+          hexCodeSpan.textContent = '-';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
+
